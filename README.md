@@ -16,7 +16,7 @@ npm install
 ```
 pip install -r python-packages.txt -t ./lib/python
 
-## Available Scripts
+## Available
 
 In the project directory, you can run:
 
