@@ -15,8 +15,7 @@ npm install
 
 ```
 pip install -r python-packages.txt -t ./lib/python
-
-
+```
 
 ## Available Scripts
 
