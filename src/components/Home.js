@@ -4,13 +4,14 @@ import './vendor/font-awesome/css/font-awesome.min.css';
 import './vendor/simple-line-icons/css/simple-line-icons.css';
 import './vendor/bootstrap/css/bootstrap.min.css';
 import Footer from './Footer.js';
-import Navbar from './Navbar.js';
+import Navbar from './Navbar';
+
 
 <script crossorigin src="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"></script>
 export default function Home() {
   return (
     <Fragment>
-        <Navbar></Navbar>
+      <div className="sec">
       <div className="masthead d-flex">
         <div class="container cont1 text-left my-0">
             <h1 class="mb-1">Microclim</h1>
@@ -28,7 +29,7 @@ export default function Home() {
             <p class="lead text-justify">The <a href="https://www.aerisweather.com/">Aeries Weather</a> is a global weather API. The Endpoints in Aeries Weather refers to the types of data to request, such as a place, observation, forecast or advisory, and will be the basis for any request made to the weather API. The Endpoint used is observations. A day of archived observations is based
                 on Midnight - 11:59:59pm local time of the observation station.</p>
 
-            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#services">Below we detail the available microclimate data and access via a web interface and API.</a>
+            <a class="btn3 btn-primary btn-xl js-scroll-trigger" href="#services">Below we detail the available microclimate data and access via a web interface and API.</a>
         </div>
       </div>
       <section class="content-section text-white text-center" id="services">
@@ -85,10 +86,11 @@ export default function Home() {
             <a href="https://github.com/ajijohn/ebm" class="btn btn-xl btn-dark">Take me to the source!</a>
         </div>
     </section>
-    <Footer></Footer>
+    <Footer />
     <a class="scroll-to-top rounded js-scroll-trigger" href="#page-top">
         <i class="fa fa-angle-up"></i>
     </a>
+    </div>
     </Fragment>
   )
 }

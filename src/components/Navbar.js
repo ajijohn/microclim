@@ -1,39 +1,56 @@
-import React, { Fragment, useState } from 'react';
-import './vendor/font-awesome/css/font-awesome.min.css';
-import './vendor/simple-line-icons/css/simple-line-icons.css';
-import './vendor/bootstrap/css/bootstrap.min.css';
+import React, { useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
-import './css/navbar.css';
+import { Link } from 'react-router-dom';
+import { SidebarData } from './SidebarData';
+import './css/navbar.css'
 import { IconContext } from 'react-icons';
 
-export default function Navbar() {
-    const [sidebar, setSidebar] = useState(false);
+function Navbar() {
 
-    const showSidebar = () => setSidebar(!sidebar)
+  const [sidebar, setSidebar] = useState(false);
+  const [closeb, setCloseb] = useState(false);
+  
+  const showSidebar = () =>{
+    setSidebar(!sidebar);
+    console.log("Show side bar")
+    setCloseb(!closeb)
+  }
+
+  const closeSidebar = () => {
+    setCloseb(!closeb)
+  }
   return (
-    <Fragment>
-        <IconContext.Provider value={{color:"#fff"}}>
-        <div className="navbar">
-            <Link to="#" className="menu-bars">
-                <FaIcons.FaBars onClick={showSidebar}/>
-            </Link>
+    <>
+      <IconContext.Provider value={{ color: '#fff' }}>
+        <div className='navbar'>
+          <Link to='#' className='menu-bars'>
+            <FaIcons.FaBars id="fa-icon" onClick={showSidebar} />
+          </Link>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-            <ul class="nav-menu-items" onClick={showSidebar}>
-                <li class="nav-bar-toggle">
-                    <Link to="#" className="menu-bars">
-                        <AiIcons.AiOutlineClose />
-                    </Link>
+          <ul className='nav-menu-items' onClick={showSidebar}>
+            <li className='navbar-toggle'>
+              <p className="title"> Microclim </p>
+              <Link to='#' className={closeb ? 'menu-bars' : 'nav-menu'} >
+                <AiIcons.AiOutlineClose id="fa-close" onClick={closeSidebar}/>
+              </Link>
+            </li>
+            {SidebarData.map((item, index) => {
+              return (
+                <li key={index} className={item.cName}>
+                  <Link to={item.path}>
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
                 </li>
-                <li><a class="js-scroll-trigger" href="/">Home</a></li>
-                <li><a class="js-scroll-trigger" href="/">Services</a></li>
-                <li><a class="js-scroll-trigger" href="/">Dashboard</a></li>
-                <li><a class="js-scroll-trigger" href="/">Login</a></li>
-            </ul>
+              );
+            })}
+          </ul>
         </nav>
-        </IconContext.Provider>
-    </Fragment>
-  )
+      </IconContext.Provider>
+    </>
+  );
 }
+
+export default Navbar;

@@ -1,6 +1,6 @@
 .masthead {
     min-height: 30rem;
-    position: relative;
+   
     display: table;
     width: 100%;
     height: auto;
@@ -11,13 +11,13 @@
     background-repeat: no-repeat;
     background-size: cover;
     text-align: left;
+    z-index: 999;
 }
 .masthead h1 {
     font-size: 4rem;
     margin: 0;
     padding: 0;
-}
-  
+}  
 @media (min-width: 992px) {
     .masthead {
        height: 100vh;
@@ -57,7 +57,7 @@ a{
     background-color: #155d74 !important;
     border-color: #666a6b !important
 }
-.btn {
+.btn3 {
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .1);
     font-weight: 700 !important;
 }
@@ -67,7 +67,7 @@ a{
     line-height: 1.5;
     border-radius: .25rem;
     margin-top: 0rem !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0rem !important;
 }
 .mb-5{
     margin-bottom: 3rem !important;
@@ -163,7 +163,7 @@ footer.footer .social-link {
     width: 4rem;
     line-height: 4.3rem;
     font-size: 1.5rem;
-    background-color: #1d809f;
+    background-color: #63757a;
     transition: background-color .15s ease-in-out;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .1)
 }

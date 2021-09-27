@@ -16,7 +16,7 @@ export default function Footer() {
                     </li>
 
                     <li class="list-inline-item">
-                        <a class="social-link rounded-circle text-white" target="_blank" href="https://github.com/ajijohn/ebm/issues">
+                        <a class="social-link rounded-circle text-white" href="https://github.com/ajijohn/ebm/issues">
                             <i class="icon-social-github"></i>
                         </a>
                     </li>

@@ -5,10 +5,10 @@ import { Auth } from "aws-amplify";
 import '../css/auth.css';
 import Footer from '../Footer.js';
 
-class LogIn extends Component {
+class ConfirmUser extends Component {
   state = {
     username: "",
-    password: "",
+    code: "",
     errors: {
       cognito: null,
       blankfield: false
@@ -38,11 +38,9 @@ class LogIn extends Component {
 
     // AWS Cognito integration here
     try {
-      const user = await Auth.signIn(this.state.username, this.state.password);
+      const user = await Auth.confirmSignUp(this.state.username, this.state.code);
       console.log(user);
-      this.props.auth.setAuthStatus(true);
-      this.props.auth.setUser(user);
-      this.props.history.push("/Home2");
+      this.props.history.push("/login");
     }catch(error) {
       let err = null;
       !error.message ? err = { "message": error } : err = error;
@@ -66,54 +64,53 @@ class LogIn extends Component {
     return (
       <section className="section auth">
         <div className="container" id="bg1">
-        <div className="card is-shady" id="bg2">
+          <div className="card is-shady" id="bg2">
             <div className="head1">
-              <h2 className="head2">Login</h2>
-            </div>
+              <h1 className="head2">Welcome</h1>
+            </div><br></br>
+          <p>You have successfully registered a new account.</p>
+          <p>We've sent you an email with a confirmation code. Please enter the confirmation code to confirm your account.</p><br></br>
           <FormErrors formerrors={this.state.errors} />
+
           <form onSubmit={this.handleSubmit}>
             <div className="field">
-              <p className="control">
-                <p className="label1"> Username  </p>
+              <p className="control1">
                 <input 
                   className="input" 
                   type="text"
                   id="username"
                   aria-describedby="usernameHelp"
-                  placeholder="Enter username or email"
+                  placeholder="Enter username"
                   value={this.state.username}
                   onChange={this.onInputChange}
                 />
               </p>
             </div>
             <div className="field">
-              <p className="control has-icons-left">
-              <p className="label1"> Password  </p>
+              <p className="control1 ">
                 <input 
                   className="input" 
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={this.state.password}
+                  type="number"
+                  id="code"
+                  placeholder="Confirmation Code"
+                  value={this.state.code}
                   onChange={this.onInputChange}
                 />
               </p>
             </div>
             <div className="field">
-              <p className="control" id="btn">
-                <button className="button is-success"> Login </button>
+              <p className="control" id="btn1">
+                <button className="button1 is-success">
+                  Confirm
+                </button>
               </p>
             </div>
             <div className="field">
               <p className="control" id="link">
-                <a href="/ForgotPassword">Forgot password ?</a>
+                <a href="/resendcode">Resend Code ?</a>
               </p>
             </div>
           </form>
-          <div>
-            <hr></hr>
-            <button className="button2 is-success"><a class="button2" href="/register">Create an account?</a></button>
-          </div>
           </div>
         </div>
         <Footer />
@@ -121,4 +118,5 @@ class LogIn extends Component {
     );
   }
 }
-export default LogIn;
+
+export default ConfirmUser;
