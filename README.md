@@ -1,6 +1,5 @@
 # Getting Started with Microclim React Application
-
-
+UI for Microclimatic data for ecological forecasting.
 
 ## Starting the Application
 
