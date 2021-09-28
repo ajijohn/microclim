@@ -5,11 +5,12 @@ import LogIn from './components/auth/LogIn';
 import Register from './components/auth/Register';
 import Home from './components/Home';
 import ForgotPassword from './components/auth/ForgotPassword';
-import Home2 from './components/Home2';
+import Index from './components/Index';
 import Confirmaccount from './components/auth/Confirmaccount';
 import { Auth } from 'aws-amplify';
 import Navbar from './components/Navbar';
 import Des from './components/des';
+import Usage from './components/usage';
 
 class App extends Component {
 
@@ -61,9 +62,10 @@ class App extends Component {
           <Route exact path="/login" render={(props) => <LogIn {...props} auth={authProps} />} />
           <Route exact path="/register" render={(props) => <Register {...props} auth={authProps} />} />
           <Route exact path="/forgotpassword" render={(props) => <ForgotPassword {...props} auth={authProps} />} />
-          <Route exact path="/home2" render={(props) => <Home2 {...props} auth={authProps} />} />
+          <Route exact path="/Index" render={(props) => <Index {...props} auth={authProps} />} />
           <Route exact path="/Confirmaccount" render={(props) => <Confirmaccount {...props} auth={authProps} />} />
           <Route exact path="/Des" render={(props) => <Des {...props} auth={authProps} />} />
+          <Route exact path="/Usage" render={(props) => <Usage {...props} auth={authProps} />} />
           </Switch>
       </div>
     </Router>
