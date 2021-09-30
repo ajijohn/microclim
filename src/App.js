@@ -11,6 +11,7 @@ import { Auth } from 'aws-amplify';
 import Navbar from './components/Navbar';
 import Des from './components/des';
 import Usage from './components/usage';
+import Account from './components/Account';
 
 class App extends Component {
 
@@ -43,7 +44,15 @@ class App extends Component {
   
     this.setState({ isAuthenticating: false });
   }
-
+  handleLogOut = async event => {
+    try {
+      Auth.signOut();
+      this.props.auth.setAuthStatus(false);
+      this.props.auth.setUser(null);
+    }catch(error) {
+      console.log(error.message);
+    }
+  }
   render() {
     const authProps = {
       isAuthenticated: this.state.isAuthenticated,
@@ -51,11 +60,14 @@ class App extends Component {
       setAuthStatus: this.setAuthStatus,
       setUser: this.setUser
     }
+
     return (
       !this.state.isAuthenticating &&
       <div className="App">
         <Router>
-          <Navbar />
+          <div className=""> 
+          <Navbar/>
+          </div>
       <div>
         <Switch>
           <Route exact path="/" render={(props) => <Home {...props} auth={authProps} />} />
@@ -66,6 +78,7 @@ class App extends Component {
           <Route exact path="/Confirmaccount" render={(props) => <Confirmaccount {...props} auth={authProps} />} />
           <Route exact path="/Des" render={(props) => <Des {...props} auth={authProps} />} />
           <Route exact path="/Usage" render={(props) => <Usage {...props} auth={authProps} />} />
+          <Route exact path="/Account" render={(props) => <Account {...props} auth={authProps} />} />
           </Switch>
       </div>
     </Router>
