@@ -5,7 +5,7 @@ import './vendor/bootstrap/css/bootstrap.min.css';
 import Footer from './Footer.js';
 import './css/index.css';
 import Maps from './maps';
-import { FaTheRedYeti } from 'react-icons/fa';
+import axios from 'axios';
 
 export default class index extends Component {
 
@@ -14,6 +14,7 @@ export default class index extends Component {
   }
 
   handleSubmit(event){
+
     event.preventDefault();
     var emailInput = event.target.email.value
     var sourceInput = event.target.sourcetype.value
@@ -29,6 +30,26 @@ export default class index extends Component {
     var intervalInput = event.target.interval.value
     var aggregationInput = event.target.aggregation.value
     var outputFormatInput = event.target.outputF.value 
+
+    axios.post("http://localhost:3001/",{
+      emailInput:emailInput,
+      sourceInput:sourceInput,
+      variableInput:variableInput,
+      shadeInput:shadeInput,
+      hodInput:hodInput,
+      latNInput:latNInput,
+      latSInput:latSInput,
+      lonWInput:lonWInput,
+      lonEInput:lonEInput,
+      stdateInput:stdateInput,
+      eddateInput:eddateInput,
+      intervalInput:intervalInput,
+      aggregationInput:aggregationInput,
+      outputFormatInput:outputFormatInput
+      }).then(function (response){
+      console.log(response)
+    })
+    //console.log(emailInput, sourceInput, variableInput, shadeInput, hodInput, latNInput, latSInput, lonEInput, lonWInput, stdateInput, eddateInput, intervalInput, aggregationInput, outputFormatInput)
   }
   render(){
     //const handleSubmit = (event) => {
@@ -39,7 +60,7 @@ export default class index extends Component {
       <Fragment>
           <div className="index"> 
             <h2> Web dashboard</h2>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} method="POST">
             <div className="dash"> 
               <div className="sec1">
                 <Maps />
