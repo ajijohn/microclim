@@ -1,6 +1,6 @@
 .navbar {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     align-content: flex-end;
     flex-direction: column;
@@ -48,7 +48,7 @@
   
 .nav-text {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     padding: 8px 0px 8px 16px;
     list-style: none;
@@ -81,7 +81,7 @@
     width: 1000px;
     height: 80px;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
 }
   

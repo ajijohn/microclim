@@ -58,10 +58,7 @@ body{
 .text-muted{
     margin-top: 6px;
 }
-#row1{
-    margin-top: 5px;
-    margin-left: 7px;
-}
+
 #row3{
     margin-top: 5px;
     margin-left: 7px;
@@ -79,7 +76,8 @@ body{
     margin-top: 20px;
 }
 #row1{
-    margin-top: 20px;
+    margin-top: 25px;
+    margin-left: 7px;
 }
 #row2{
     margin-top: -25px;
@@ -93,4 +91,8 @@ body{
 }
 #variable{
     margin-left: -7px;
+}
+#row5{
+    margin-left: -20px;
+    margin-top: 5px;
 }

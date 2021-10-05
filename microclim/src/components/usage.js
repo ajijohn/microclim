@@ -56,8 +56,8 @@ export default function usage() {
                         supports the REST API framework. However, we support APIs in R and Python, and details can be found in our respective GitHub repositories:</p>
                         <pre><code></code></pre>
                         <ul class="list-group h4">
-                            <li class="list-group-item"><a href="https://github.com/ajijohn/microclimRapi" target="_blank">Official R API library</a></li>
-                            <li class="list-group-item"><a href="https://github.com/ajijohn/microclim-api" target="_blank">Official Python API library</a></li>
+                            <li class="list-group-item"><a href="https://github.com/ajijohn/microclimRapi">Official R API library</a></li>
+                            <li class="list-group-item"><a href="https://github.com/ajijohn/microclim-api">Official Python API library</a></li>
                         </ul>
                         <pre><code></code></pre>
 

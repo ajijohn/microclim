@@ -8,25 +8,25 @@ import './vendor/bootstrap/css/bootstrap.min.css';
 export default function Footer() {
   return (
     <Fragment>
-       <footer class="footer text-center">
-            <div class="container">
-                <ul class="list-inline mb-5">
-                    <li class="list-inline-item">
+       <footer className="footer text-center">
+            <div className="container">
+                <ul className="list-inline mb-5">
+                    <li className="list-inline-item">
                         Please add any questions, concerns, or suggestions as issues on the project’s GitHub page
                     </li>
 
-                    <li class="list-inline-item">
-                        <a class="social-link rounded-circle text-white" href="https://github.com/ajijohn/ebm/issues">
-                            <i class="icon-social-github"></i>
+                    <li className="list-inline-item">
+                        <a className="social-link rounded-circle text-white" href="https://github.com/ajijohn/ebm/issues">
+                            <i className="icon-social-github"></i>
                         </a>
                     </li>
                 </ul>
-                <p class="text-muted small mb-0">Copyright &copy; 2014-2021 University of Washington. Aji John.</p>
-                <p class="text-muted small mb-0"><a href="/tos">Terms of Service</a> | <a href="/pp">Privacy Policy</a></p>
-                <ul class="pull-right list-inline">
+                <p className="text-muted small mb-0">Copyright &copy; 2014-2021 University of Washington. Aji John.</p>
+                <p className="text-muted small mb-0"><a href="/tos">Terms of Service</a> | <a href="/pp">Privacy Policy</a></p>
+                <ul className="pull-right list-inline">
                     <li><b>beta release</b></li>
                     <li>
-                        <v>1.00</v>
+                        <p>1.00</p>
                     </li>
                 </ul>
             </div>

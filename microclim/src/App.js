@@ -13,8 +13,8 @@ import Des from './components/des';
 import Usage from './components/usage';
 import Account from './components/Account';
 
-class App extends Component {
 
+class App extends Component {
   state = {
     isAuthenticated: false,
     isAuthenticating: true,
@@ -44,15 +44,6 @@ class App extends Component {
   
     this.setState({ isAuthenticating: false });
   }
-  handleLogOut = async event => {
-    try {
-      Auth.signOut();
-      this.props.auth.setAuthStatus(false);
-      this.props.auth.setUser(null);
-    }catch(error) {
-      console.log(error.message);
-    }
-  }
   render() {
     const authProps = {
       isAuthenticated: this.state.isAuthenticated,
@@ -65,23 +56,21 @@ class App extends Component {
       !this.state.isAuthenticating &&
       <div className="App">
         <Router>
-          <div className=""> 
-          <Navbar/>
+          <div>
+            <Navbar auth={authProps} />
+            <Switch>
+              <Route exact path="/" render={(props) => <Home {...props} auth={authProps} />} />
+              <Route exact path="/login" render={(props) => <LogIn {...props} auth={authProps} />} />
+              <Route exact path="/register" render={(props) => <Register {...props} auth={authProps} />} />
+              <Route exact path="/forgotpassword" render={(props) => <ForgotPassword {...props} auth={authProps} />} />
+              <Route exact path="/Index" render={(props) => <Index {...props} auth={authProps} />} />
+              <Route exact path="/Confirmaccount" render={(props) => <Confirmaccount {...props} auth={authProps} />} />
+              <Route exact path="/Des" render={(props) => <Des {...props} auth={authProps} />} />
+              <Route exact path="/Usage" render={(props) => <Usage {...props} auth={authProps} />} />
+              <Route exact path="/Account" render={(props) => <Account {...props} auth={authProps} />} />
+            </Switch>
           </div>
-      <div>
-        <Switch>
-          <Route exact path="/" render={(props) => <Home {...props} auth={authProps} />} />
-          <Route exact path="/login" render={(props) => <LogIn {...props} auth={authProps} />} />
-          <Route exact path="/register" render={(props) => <Register {...props} auth={authProps} />} />
-          <Route exact path="/forgotpassword" render={(props) => <ForgotPassword {...props} auth={authProps} />} />
-          <Route exact path="/Index" render={(props) => <Index {...props} auth={authProps} />} />
-          <Route exact path="/Confirmaccount" render={(props) => <Confirmaccount {...props} auth={authProps} />} />
-          <Route exact path="/Des" render={(props) => <Des {...props} auth={authProps} />} />
-          <Route exact path="/Usage" render={(props) => <Usage {...props} auth={authProps} />} />
-          <Route exact path="/Account" render={(props) => <Account {...props} auth={authProps} />} />
-          </Switch>
-      </div>
-    </Router>
+        </Router>
       </div>
     );
   }
