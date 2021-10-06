@@ -34,7 +34,7 @@ const RequestSchema = new mongoose.Schema({
         required:true
     },
     variable:{
-        type:String,
+        type:Array,
         required:true
     },
     shadelevel:{
@@ -69,8 +69,9 @@ const RequestSchema = new mongoose.Schema({
         type:String,
         required:true
     }
-})
-const modelSchema = mongoose.model("Ebm",RequestSchema)
+}
+)
+const modelSchema = mongoose.model("Ebms",RequestSchema)
 module.exports = modelSchema;
 
         

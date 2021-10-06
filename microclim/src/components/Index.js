@@ -12,6 +12,7 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import './css/leaflet.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Select from 'react-select';
 
 export default class index extends Component {
   constructor(props){
@@ -19,10 +20,16 @@ export default class index extends Component {
     this.state = { 
       startDate : new Date("1980/01/01"),
       endDate : new Date("1980/01/01"),
+      mdate:new Date('2000/01/01'),
       LatN : ' ',
       LatS : ' ',
       LonE : ' ',
-      LonW : ' '
+      LonW : ' ',
+      selectedOptions_Variable:[],
+      selectedOptions_hod:[],
+      selectedOptions_Source:[],
+      selectedOptions_interval:[],
+      selectedOptions_Aggregation:[]
     }
     this.setStartDate = this.setStartDate.bind(this);
     this.endDate = this.setEndDate.bind(this);
@@ -32,7 +39,7 @@ export default class index extends Component {
     this.handleSubmit=this.handleSubmit.bind(this);
     this.deleted=this.deleted.bind(this);
   }
-
+ 
   handleReset(){
     this.setState({
       LatN: "",
@@ -41,16 +48,36 @@ export default class index extends Component {
       LonW:"",
       startDate:new Date("1980/01/01"),
       endDate:new Date("1980/01/01")
-    });
+    })
   }
 
   yourChangeHandler(event){
     console.log(event.target.value)
   }
+  handleSource = (selectedOptions_Source) => {
+    this.setState({selectedOptions_Source})
+  }
+  handleVariable = (selectedOptions_Source) => {
+    this.setState({ selectedOptions_Variable:selectedOptions_Source });
+  }
+  handleInterval = (selectedOptions_interval) => {
+    this.setState({selectedOptions_interval})
+  }
+  handleAggregation = (selectedOptions_Aggregation) => {
+    this.setState({selectedOptions_Aggregation})
+  }
+
+  handleHod=(selectedOptions_hod) => {
+    this.setState({selectedOptions_hod})
+  }
 
   setStartDate(date){
     console.log("Date1",date)
     this.setState({startDate:date})
+    var d1 = date.getFullYear()+2
+    var d2 = date.getMonth()+1
+    var d3=d1+'/'+d2+'/'+date.getDate()
+    this.setState({mdate:new Date(d3)})
   }
 
   setEndDate(date){
@@ -73,20 +100,21 @@ export default class index extends Component {
   handleSubmit(event){
     event.preventDefault();
     var emailInput = event.target.email.value
-    var sourceInput = event.target.sourcetype.value
-    var variableInput = event.target.variable.value
+    var sourceInput = this.state.selectedOptions_Source.value
+    var variableInput = this.state.selectedOptions_Variable
     var shadeInput = event.target.shadelevel.value
-    var hodInput = event.target.hod.value
+    var hodInput = this.state.selectedOptions_hod.value
     var latNInput = event.target.latN.value
     var latSInput = event.target.latS.value
     var lonWInput = event.target.lonW.value
     var lonEInput = event.target.lonE.value
     var stdateInput = event.target.stdate.value
     var eddateInput = event.target.eddate.value
-    var intervalInput = event.target.interval.value
-    var aggregationInput = event.target.aggregation.value
-    var outputFormatInput = event.target.outputF.value 
-
+    var intervalInput = this.state.selectedOptions_interval.value
+    var aggregationInput = this.state.selectedOptions_Aggregation.value
+    var outputFormatInput = event.target.outputF.value
+    console.log(eddateInput)
+    
     axios.post("http://localhost:3001/insert",{
       emailInput:emailInput,
       sourceInput:sourceInput,
@@ -108,7 +136,7 @@ export default class index extends Component {
         event.target.reset();
       }
     })  
-    this.handleReset();                              
+    this.handleReset();        
   }
 
   created = (e) => {
@@ -139,8 +167,101 @@ export default class index extends Component {
   }
 
   render(){
+    const optionHod=[
+      {value:"0.03" ,label:"0.03"},
+      {value:"0.06" ,label:"0.06"},
+      {value:"0.09" ,label:"0.09"},
+      {value:"0.12" ,label:"0.12"},
+      {value:"0.15" ,label:"0.15"},
+      {value:"0.18" ,label:"0.18"},
+      {value:"0.21" ,label:"0.21"},
+      {value:"0.24" ,label:"0.24"},
+      {value:"0.27" ,label:"0.27"},
+      {value:"0.30" ,label:"0.30"},
+      {value:"0.48" ,label:"0.48"},
+      {value:"0.66" ,label:"0.66"},
+      {value:"0.84" ,label:"0.84"},
+      {value:"1.02" ,label:"1.02"},
+      {value:"1.20" ,label:"1.20"},
+      {value:"1.38" ,label:"1.38"},
+      {value:"1.56" ,label:"1.56"},
+      {value:"1.74" ,label:"1.74"}, 
+      {value:"1.92" ,label:"1.92"} 
+    ]
+    const optionVariable = [
+      {
+        label: "WRF",link:"WRF",
+        options: [
+          { label: "ALBEDO", value: "ALBEDO",link:"WRF" },
+          { label: "BGAP", value: "BGAP",link:"WRF" },
+          { label: "FVEP", value: "FVEP",link:"WRF" },
+          { label: "GLW", value: "GLW",link:"WRF" },
+          { label: "ISNOW", value: "SWDOWN",link:"WRF" },
+          { label: "TAH", value: "TAH",link:"WRF" },
+          { label: "TV", value: "TV",link:"WRF" },
+          { label: "WGAP", value: "WGAP",link:"WRF" },
+          { label: "TG ", value: "TG",link:"WRF" },
+          { label: "T2", value: "T2",link:"WRF" },
+          { label: "QAIR", value: "QAIR",link:"WRF" },
+          { label: "SMOIS", value: "SMOIS",link:"WRF" }
+        ]
+      },
+      {
+        label: "Microclimate",link:"WRF",
+        options: [
+          { label: "Tair", value: "Tair",link:"WRF" },
+          { label: "Tsurface", value: "Tsurface",link:"WRF" },
+          { label: "Tsoil", value: "Tsoil",link:"WRF" },
+          { label: "UV", value: "UV",link:"WRF" }
+        ]
+      },
+      {
+        label: "ECMWF",link:"ERA5",
+        options: [
+          { label: "2m temperature", value: "2m temperature",link:"ERA5" },
+          { label: "Skin Temperature", value: "Skin Temperature",link:"ERA5" },
+          { label: "Soil Temperature Level 1", value: "Soil Temperature Level 1",link:"ERA5" },
+          { label: "Volumetric Soil Water Layer 1", value: "Volumetric Soil Water Layer 1",link:"ERA5" },
+          { label: "Evaporation", value: "Evaporation",link:"ERA5" },
+          { label: "Potential Evaporation", value: "Potential Evaporation",link:"ERA5" },
+          { label: "Surface solar radiation downwards", value: "Surface solar radiation downwards",link:"ERA5" },
+          { label: "100m u component of wind", value: "100m u component of wind",link:"ERA5" },
+          { label: "High Vegetation Cover", value: "High Vegetation Cover",link:"ERA5" }
+        ]
+      },
+      {
+        label: "Real Time",link:"Aeris",
+        options: [
+          { label: "Temperature", value: "Temperature",link:"Aeris"},
+          { label: "Solar Radiation", value: "Solar Readiation",link:"Aeris" },
+          { label: "Wind Speed", value: "Wind Speed",link:"Aeris" },
+          { label: "Wind Direction", value: "Wind Direction",link:"Aeris" }
+        ]
+      }
+    ];
+    const optionSource=[
+      {label:"WRF",value:"WRF"},
+      {label:"ERA5",value:"ERA5"},
+      {label:"Aeris",value:"Aeris"}
+    ];
+    const optionInterval=[
+      {label:"Hourly",value:"Hourly"},
+      {label:"6 Hourly",value:"6 Hourly"},
+      {label:"12 Hourly",value:"12 Hourly"},
+      {label:"Daily",value:"Daily"},
+      {label:"Monthly",value:"Monthly"}
+    ];
+    const optionAggregation=[
+      {label:"Instantaneous",value:"Instantaneous"},
+      {label:"Max",value:"Max"},
+      {label:"Min",value:"Min"},
+      {label:"Mean",value:"Mean"}
+    ];
+    const filteredOptions = optionVariable.filter((o) => o.link === this.state.selectedOptions_Source.value)
     return (
       <Fragment>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.6.3/umd/react.production.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.6.3/umd/react-dom.production.min.js"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/2.14.1/react-datepicker.min.css" crossOrigin="anonymous"> </script>
           <div className="index"> 
             <h2> Web dashboard</h2>
@@ -162,64 +283,21 @@ export default class index extends Component {
               <div className="sec2">
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label" id="sourcet">Source </label>
-                    <select className="selectpicker" id="sourcetype" name="sourcetype" onChange={this.yourChangeHandler.bind(this)}>
-                      <option id='WRF' defaultValue='WRF'>WRF</option>
-                      <option id='ERA5' defaultValue="ERA5">ERA5</option>
-                      <option id="Aeris" defaultValue="Aeris">Aeris</option>
-                    </select>
+                  <Select value={this.selectedOption_Source} options={optionSource} id="sourcetype" name="sourcetype" onChange={this.handleSource} />
                 </div>
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label">Variable</label>
-                    <select className="selectpicker" id="variable" name="variable" onChange={this.yourChangeHandler.bind(this)}>
-                      <optgroup label="WRF">
-                        <option id="ALBEDO">ALBEDO</option>
-                        <option id="BGAP">BGAP</option>
-                        <option id="FVEG">FVEG</option>
-                        <option id="GLW">GLW</option>
-                        <option id="ISNOW">ISNOW</option>
-                        <option id="SWDOWN">SWDOWN</option>
-                        <option id="TAH">TAH</option>
-                        <option id="TV">TV</option>
-                        <option id="WGAP">WGAP</option>
-                        <option id="TG">TG</option>
-                        <option id="T2">T2</option>
-                        <option id="QAIR">QAIR</option>
-                        <option id="SMOIS">SMOIS</option>
-                      </optgroup>
-                      <optgroup label="Microclimate">
-                        <option id="Tair">Tair</option>
-                        <option id="Tsurface">Tsurface</option>
-                        <option id="Tsoil">Tsoil</option>
-                        <option id="UV">UV</option>
-                      </optgroup>
-                      <optgroup label="ECMWF">
-                        <option id="2m_temperature" defaultValue="2m_temperature">2m temperature</option>
-                        <option id="skin_temperature" defaultValue="skin_temperature">Skin Temperature </option>
-                        <option id="soil_temperature_level_1" defaultValue="soil_temperature_level_1">Soil Temperature Level 1</option>
-                        <option id="volumetric_soil_water_layer_1" defaultValue="volumetric_soil_water_layer_1">Volumetric Soil Water Layer 1</option>
-                        <option id="evaporation" defaultValue="evaporation">Evaporation</option>
-                        <option id="potential_evaporation" defaultValue="potential_evaporation">Potential Evaporation</option>
-                        <option id="surface_solar_radiation_downwards" defaultValue="surface_solar_radiation_downwards">Surface solar radiation downwards</option>
-                        <option id="10m_u_component_of_wind" defaultValue="10m_u_component_of_wind">100m u component of wind </option>
-                        <option id="high_vegetation_cover" defaultValue="high_vegetation_cover">High Vegetation Cover</option>
-                      </optgroup>
-                      <optgroup label="Real Time">
-                        <option id="Temperature">Temperature</option>
-                        <option id="solar_radiation">Solar Radiation</option>
-                        <option id="wind_speed">Wind Speed</option>
-                        <option id="wind_direction">Wind Direction</option>
-                      </optgroup>
-                    </select>
+                    <Select isMulti value={this.selectedOption_Variable} onChange={this.handleVariable} options={filteredOptions} id="variable" name="variable" />
                 </div>
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label">Shade Level</label>
                   <div className="col-md-auto btn-group btn-group-toggle" data-toggle="buttons" name="shadelevel" onChange={this.yourChangeHandler.bind(this)}>
-                     <label className="btn btn-secondary  active form-check-label" id="shadelevel">
-                        <input className="form-check-input" type="radio" id="shadelevel" name="shadelevel" defaultValue="0%" />0 </label>
+                      <label className="btn btn-secondary" id="shadelevel1">
+                        <input className="form-check-input" type="radio" id="shadelevel1" name="shadelevel" defaultValue="0%" />0% </label>
                       <label className="btn btn-secondary" id="shadelevel1">
                         <input className="form-check-input" type="radio" id="shadelevel1" name="shadelevel" defaultValue="25%" />25% </label>
                       <label className="btn btn-secondary" id="shadelevel2">
-                        <input className="form-check-input" type="radio" id="shadelevel2" name="shadelevel" defaultValue="50%" />5% </label>
+                        <input className="form-check-input" type="radio" id="shadelevel2" name="shadelevel" defaultValue="50%" />50% </label>
                       <label className="btn btn-secondary" id="shadelevel3">
                         <input className="form-check-input" type="radio" id="shadelevel3" name="shadelevel" defaultValue="75%" />75% </label>
                       <label className="btn btn-secondary" id="shadelevel4">
@@ -228,27 +306,7 @@ export default class index extends Component {
                 </div>
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label">Height or depth(m)</label>
-                  <select id="hod" name="hod" className="selectpicker" onChange={this.yourChangeHandler.bind(this)}> 
-                    <option defaultValue="0">0.03</option>
-                    <option defaultValue="1">0.06</option>
-                    <option defaultValue="2">0.09</option>
-                    <option defaultValue="3">0.12</option>
-                    <option defaultValue="4">0.15</option>
-                    <option defaultValue="5">0.18</option>
-                    <option defaultValue="6">0.21</option>
-                    <option defaultValue="7">0.24</option>
-                    <option defaultValue="8">0.27</option>
-                    <option defaultValue="9">0.30</option>
-                    <option defaultValue="10">0.48</option>
-                    <option defaultValue="11">0.66</option>
-                    <option defaultValue="12">0.84</option>
-                    <option defaultValue="13">1.02</option>
-                    <option defaultValue="14">1.20</option>
-                    <option defaultValue="15">1.38</option>
-                    <option defaultValue="16">1.56</option>
-                    <option defaultValue="17">1.74</option>
-                    <option defaultValue="18">1.92</option>
-                  </select>
+                  <Select value={this.selectedOption_hod} options={optionHod} id="hod" name="hod" onChange={this.handleHod} />
                 </div>
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label">Locations</label>
@@ -289,7 +347,7 @@ export default class index extends Component {
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label">Time periods</label>
                   <div className="col-md-auto btn-group btn-group-toggle" data-toggle="buttons">
-                    <label className="btn btn-primary active">
+                    <label className="btn btn-primary">
                       <input type="radio" name="tp" defaultValue="past" onClick={this.past}/>Past
                     </label>
                     <label className="btn btn-primary" id="future">
@@ -305,32 +363,21 @@ export default class index extends Component {
                     <div className="col-xs-3 btn-group btn-group-toggle input-group input-daterange">
                       <label className="col-sm-auto col-form-label" id="labsd">Start Date</label>
                           <div className="col-md-auto" id="row5">
-                              <DatePicker wrapperClassName="datePicker" selected={this.state.startDate} onChange={(date) => this.setStartDate(date)} selectsStart startDate={this.state.startDate} endDate={this.state.endDate} name="stdate" />                             
+                              <DatePicker wrapperClassName="datePicker" selected={this.state.startDate} onChange={(date) => this.setStartDate(date)} selectsStart startDate={this.state.startDate} endDate={this.state.endDate} minDate={this.state.startDate} maxDate={this.state.mdate} name="stdate" />                             
                           </div>
                           <label className="col-sm-auto col-form-label">End Date</label>
                           <div className="col-md-auto" id="row5">
-                              <DatePicker wrapperClassName="datePicker" selected={this.state.endDate} onChange={(date) => this.setEndDate(date)} selectsEnd startDate={this.state.startDate} endDate={this.state.endDate} minDate={this.state.startDate} name="eddate" />
+                              <DatePicker wrapperClassName="datePicker" selected={this.state.endDate} onChange={(date) => this.setEndDate(date)} selectsEnd startDate={this.state.startDate} endDate={this.state.endDate} minDate={this.state.startDate} maxDate={this.state.mdate} name="eddate" />
                           </div>
                     </div> 
                  </div>
                  <div className="form-group row">
                       <label className="col-sm-auto col-form-label">Interval</label>
-                      <select id="interval" className="selectpicker" onChange={this.yourChangeHandler.bind(this)} name="interval"> 
-                          <option defaultValue="Hourly">Hourly</option>
-                          <option defaultValue="6 Hourly">6 Hourly</option>
-                          <option defaultValue="12 Hourly">12 Hourly</option>
-                          <option defaultValue="Daily">Daily</option>
-                          <option defaultValue="Monthly" id="Monthly">Monthly</option>
-                      </select>
-                  </div>
-                  <div className="form-group row">
-                      <label className="col-sm-auto col-form-label">Aggregation Metric</label>
-                      <select id="aggregation" className="selectpicker" onChange={this.yourChangeHandler.bind(this)} name="aggregation">
-                          <option defaultValue="Instantaneous">Instantaneous</option>
-                          <option defaultValue="Max">Max</option>
-                          <option defaultValue="Min">Min</option>
-                          <option defaultValue="Mean">Mean</option>
-                      </select>
+                      <Select value={this.selectedOption_interval} options={optionInterval} id="interval" name="interval" onChange={this.handleInterval} />
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-sm-auto col-form-label">Aggregation Metric</label>
+                      <Select value={this.selectedOption_Aggregation} options={optionAggregation} id="aggregation" name="aggregation" onChange={this.handleAggregation} />
                   </div>
                   <div className="form-group row">
                       <label className="col-sm-auto col-form-label">Output file format</label>
