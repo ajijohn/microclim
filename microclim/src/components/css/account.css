@@ -1,0 +1,38 @@
+#email{
+    margin-left: 33px;
+    width: 300px;
+}
+#website{
+    margin-left: 13px;
+}
+.input{
+    width: 300px;
+}
+#username{
+    margin-left: 3px;
+}
+#location{
+    margin-left: 3px;
+}
+.btn{
+    background-color: #1d809f;
+    color: white !important;
+    font-weight: bold;
+}
+a{
+    color: white;
+    text-decoration-line: none !important;
+}
+#btnWebsite{
+    background-color: #1d809f;
+    color: white !important;
+    font-weight: bold;
+    margin-left: 10px;
+}
+.field1{
+    margin-left: -140px;
+
+}
+#btn4{
+    margin-left: 250px;
+}

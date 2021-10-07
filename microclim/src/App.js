@@ -12,6 +12,8 @@ import Navbar from './components/Navbar';
 import Des from './components/des';
 import Usage from './components/usage';
 import Account from './components/Account';
+import UpdateWebsite from './components/updateWebsite';
+import UpdateLocation from './components/updateLocation';
 
 
 class App extends Component {
@@ -68,6 +70,8 @@ class App extends Component {
               <Route exact path="/Des" render={(props) => <Des {...props} auth={authProps} />} />
               <Route exact path="/Usage" render={(props) => <Usage {...props} auth={authProps} />} />
               <Route exact path="/Account" render={(props) => <Account {...props} auth={authProps} />} />
+              <Route exact path="/updateWebsite" render={(props) => <UpdateWebsite {...props} auth={authProps} />} />
+              <Route exact path="/updateLocation" render={(props) => <UpdateLocation {...props} auth={authProps} />} />
             </Switch>
           </div>
         </Router>

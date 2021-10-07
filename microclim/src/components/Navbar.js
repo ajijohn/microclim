@@ -64,9 +64,19 @@ export default class navContent extends Component {
                     <Link to="/login"><span> Dashboard </span></Link>
                 </li>
                 )}
+                {this.props.auth.isAuthenticated && (
+                  <li key="Ind" className="nav-text">
+                    <span>Welcome {this.props.auth.user.username}</span>
+                  </li>
+                )}
                 {this.props.auth.isAuthenticated && ( 
                   <li key="Home" className="nav-text">
                     <Link to="/Index"><span>Home</span></Link>
+                  </li>
+                )}
+                {this.props.auth.isAuthenticated && ( 
+                  <li key="Account" className="nav-text">
+                    <Link to="/Account"><span>Account</span></Link>
                   </li>
                 )}
                 {this.props.auth.isAuthenticated && (
@@ -74,6 +84,8 @@ export default class navContent extends Component {
                         <Link to="/" onClick={this.handleLogOut}><span>Logout</span></Link>
                     </li>
                 )}
+                
+
               </ul>
             </nav>
           </IconContext.Provider>
