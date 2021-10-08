@@ -58,7 +58,7 @@ class Account extends Component {
                   id="location"
                   placeholder={this.props.auth.user.attributes.address}
                 />
-                 <button type="submit" className="btn" id="btnWebsite"><Link to="/updateLocation">Update Location</Link></button>
+                 <button type="submit" className="btn" id="btnWebsite"><Link to="/Update_Location">Update Location</Link></button>
               </p>
             </div>
             <div className="button"> 

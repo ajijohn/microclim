@@ -13,7 +13,7 @@ import Des from './components/des';
 import Usage from './components/usage';
 import Account from './components/Account';
 import UpdateWebsite from './components/updateWebsite';
-import UpdateLocation from './components/updateLocation';
+import Update_Location from './components/Update_Location';
 
 
 class App extends Component {
@@ -71,7 +71,7 @@ class App extends Component {
               <Route exact path="/Usage" render={(props) => <Usage {...props} auth={authProps} />} />
               <Route exact path="/Account" render={(props) => <Account {...props} auth={authProps} />} />
               <Route exact path="/updateWebsite" render={(props) => <UpdateWebsite {...props} auth={authProps} />} />
-              <Route exact path="/updateLocation" render={(props) => <UpdateLocation {...props} auth={authProps} />} />
+              <Route exact path="/Update_Location" render={(props) => <Update_Location {...props} auth={authProps} />} />
             </Switch>
           </div>
         </Router>
@@ -79,5 +79,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;
