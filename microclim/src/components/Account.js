@@ -46,7 +46,7 @@ class Account extends Component {
                   id="website"
                   placeholder={this.props.auth.user.attributes.website}
                 />
-                <button type="submit" className="btn" id="btnWebsite"><Link to="/updateWebsite">Update Website</Link></button>
+                <button type="submit" className="btn1" id="btnWebsite"><Link to="/updateWebsite">Update Website</Link></button>
               </p>
             </div>
             <div className="field">
@@ -58,11 +58,11 @@ class Account extends Component {
                   id="location"
                   placeholder={this.props.auth.user.attributes.address}
                 />
-                 <button type="submit" className="btn" id="btnWebsite"><Link to="/Update_Location">Update Location</Link></button>
+                 <button type="submit" className="btn1" id="btnWebsite"><Link to="/Update_Location">Update Location</Link></button>
               </p>
             </div>
             <div className="button"> 
-             <button type="submit" className="btn"><Link to="/forgotpassword">Reset Password</Link></button>
+             <button type="submit" className="btn1"><Link to="/forgotpassword">Reset Password</Link></button>
             </div>
           </div>
         </div>

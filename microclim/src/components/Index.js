@@ -5,7 +5,7 @@ import './vendor/bootstrap/css/bootstrap.min.css';
 import Footer from './Footer.js';
 import './css/index.css';
 import axios from 'axios';
-import { MapContainer , TileLayer, FeatureGroup } from 'react-leaflet';
+import { MapContainer , TileLayer, FeatureGroup} from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -15,6 +15,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
 
 export default class index extends Component {
+
   constructor(props){
     super(props);
     this.state = { 
@@ -39,15 +40,20 @@ export default class index extends Component {
     this.handleSubmit=this.handleSubmit.bind(this);
     this.deleted=this.deleted.bind(this);
   }
- 
-  handleReset(){
+
+  handleReset(e){
     this.setState({
       LatN: "",
       LatS:"",
       LonE:"",
       LonW:"",
       startDate:new Date("1980/01/01"),
-      endDate:new Date("1980/01/01")
+      endDate:new Date("1980/01/01"),
+      selectedOptions_Source:[],
+      selectedOptions_Variable:[],
+      selectedOptions_hod:[],
+      selectedOptions_interval:[],
+      selectedOptions_Aggregation:[]
     })
   }
 
@@ -140,14 +146,13 @@ export default class index extends Component {
   }
 
   created = (e) => {
-    //console.log(e);
+    console.log(e);
     const { layerType } = e;
     if (layerType==="rectangle"){
       var north = e.layer._bounds._northEast.lat;
       var east = e.layer._bounds._northEast.lng;
       var south = e.layer._bounds._southWest.lat;
       var west =  e.layer._bounds._southWest.lng;
-      console.log(north,east,south,west)
       this.setState({ LatN: north, LatS:south, LonE:east, LonW:west })
     }
   }
@@ -164,6 +169,8 @@ export default class index extends Component {
       LonE:"",
       LonW:"",
     });
+    console.log(e.type);
+
   }
 
   render(){
@@ -258,6 +265,7 @@ export default class index extends Component {
       {label:"Mean",value:"Mean"}
     ];
     const filteredOptions = optionVariable.filter((o) => o.link === this.state.selectedOptions_Source.value)
+
     return (
       <Fragment>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.6.3/umd/react.production.min.js"></script>
@@ -269,25 +277,25 @@ export default class index extends Component {
             {this.props.auth.isAuthenticated && (
             <div className="dash"> 
               <div className="sec1">
-              <MapContainer className="map" center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+              <MapContainer className="map" center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false} ref={this.mapRef}>
                   <FeatureGroup>
-                    <EditControl position="topleft" onCreated={this.created} onEdited={this.edited} onDeleted={this.deleted} draw={{circle:false, marker:false, polygon:false, polyline:false}}/>
-                  </FeatureGroup>
+                    <EditControl position="topleft" onCreated={this.created} onEdited={this.edited} onDeleted={this.deleted} draw={{circle:false, marker:false, polygon:false, polyline:false}} />
+                  </FeatureGroup >
                   <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
               </MapContainer>
               <pre className="text-left" ></pre>
-              </div>
+              </div> 
               <div className="sec2">
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label" id="sourcet">Source </label>
-                  <Select value={this.selectedOption_Source} options={optionSource} id="sourcetype" name="sourcetype" onChange={this.handleSource} />
+                  <Select value={this.state.selectedOptions_Source} options={optionSource} id="sourcetype" classNamePrefix="select" name="sourcetype" onChange={this.handleSource} />
                 </div>
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label">Variable</label>
-                    <Select isMulti value={this.selectedOption_Variable} onChange={this.handleVariable} options={filteredOptions} id="variable" name="variable" />
+                    <Select isMulti value={this.state.selectedOptions_Variable} onChange={this.handleVariable} options={filteredOptions} id="variable" name="variable" />
                 </div>
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label">Shade Level</label>
@@ -306,7 +314,7 @@ export default class index extends Component {
                 </div>
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label">Height or depth(m)</label>
-                  <Select value={this.selectedOption_hod} options={optionHod} id="hod" name="hod" onChange={this.handleHod} />
+                  <Select value={this.state.selectedOptions_hod} options={optionHod} id="hod" name="hod" onChange={this.handleHod} />
                 </div>
                 <div className="form-group row">
                   <label className="col-sm-auto col-form-label">Locations</label>
@@ -373,11 +381,11 @@ export default class index extends Component {
                  </div>
                  <div className="form-group row">
                       <label className="col-sm-auto col-form-label">Interval</label>
-                      <Select value={this.selectedOption_interval} options={optionInterval} id="interval" name="interval" onChange={this.handleInterval} />
+                      <Select value={this.state.selectedOptions_interval} options={optionInterval} id="interval" name="interval" onChange={this.handleInterval} />
                     </div>
                     <div className="form-group row">
                         <label className="col-sm-auto col-form-label">Aggregation Metric</label>
-                      <Select value={this.selectedOption_Aggregation} options={optionAggregation} id="aggregation" name="aggregation" onChange={this.handleAggregation} />
+                      <Select value={this.state.selectedOptions_Aggregation} options={optionAggregation} id="aggregation" name="aggregation" onChange={this.handleAggregation} />
                   </div>
                   <div className="form-group row">
                       <label className="col-sm-auto col-form-label">Output file format</label>
@@ -395,7 +403,7 @@ export default class index extends Component {
                   <div className="form-group row">
                       <label className="col-sm-auto col-form-label">Email address</label>
                       <div className="col-md-auto">
-                          <input type="email" className="form-control" id="email" name="email" placeholder={this.props.auth.user.attributes.email} defaultValue={this.props.auth.user.attributes.email} required/>
+                        <input type="email" className="form-control" id="email" name="email" placeholder={this.props.auth.user.attributes.email} defaultValue={this.props.auth.user.attributes.email} required/>
                       </div>
                   </div>
                   <div className="form-group row">
